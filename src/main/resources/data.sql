@@ -10,18 +10,24 @@
 --INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) VALUES('Dúvida 2', 'Projeto não compila', '2019-05-05 19:00:00', 'NAO_RESPONDIDO', 1, 1);
 --INSERT INTO TOPICO(titulo, mensagem, data_criacao, status, autor_id, curso_id) VALUES('Dúvida 3', 'Tag HTML', '2019-05-05 20:00:00', 'NAO_RESPONDIDO', 1, 2);
 
-INSERT INTO CATEGORIA(nome) VALUES ('Luz');
-INSERT INTO CATEGORIA(nome) VALUES ('Agua');
-INSERT INTO CATEGORIA(nome) VALUES ('Telefone');
-INSERT INTO CATEGORIA(nome) VALUES ('Aluguel');
-INSERT INTO CATEGORIA(nome) VALUES ('Gas');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Fluminense','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Flamengo','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Vasco','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Botafogo','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Palmeiras','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('São Paulo','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Santos','2021-01-12','2');
+INSERT INTO time(nome,dt_criacao,usuario_id) VALUES ('Corinthians','2021-01-12','2');
 
-INSERT INTO Fornecedor(nome) VALUES ('CEB');
-INSERT INTO Fornecedor(nome) VALUES ('CAESB');
-INSERT INTO Fornecedor(nome) VALUES ('Vivo');
-INSERT INTO Fornecedor(nome) VALUES ('Gas Braz');
-INSERT INTO Fornecedor(nome) VALUES ('Adega');
+--Insert dos criterios
 
-INSERT INTO Boleto(nome,dt_criacao,categoria_id,usuario_id,fornecedor_id) VALUES ('Energia Eletrica', '2020-03-23','1','1','1');
-INSERT INTO Boleto(nome,dt_criacao,categoria_id,usuario_id,fornecedor_id) VALUES ('Agua', '2020-03-24','2','2','2');
-INSERT INTO Boleto(nome,dt_criacao,categoria_id,usuario_id,fornecedor_id) VALUES ('Telefone e internet', '2020-03-25','1','3','3');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('NORMAL', 'PE');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('NORMAL', 'RCG');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('NORMAL', 'RC');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('NORMAL', 'GE');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'CAMPEAO');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'VICE');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'QUARTO');
+INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'TIMEARTILHEIRO');
+
+
