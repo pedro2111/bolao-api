@@ -26,16 +26,20 @@ public class Time {
 	@ManyToOne
 	private Usuario usuario;
 	private LocalDate dtCriacao = LocalDate.now();
+	private String public_id;
+	private String url;
 	
 	
 	public Time() {
 		
 	}
 	
-	public Time(String nome, Usuario usuario) {
+	public Time(String nome, Usuario usuario, String url, String public_id) {
 		
 		this.nome = nome;
 		this.usuario = usuario;
+		this.url = url;
+		this.public_id = public_id;
 	}
 
 	

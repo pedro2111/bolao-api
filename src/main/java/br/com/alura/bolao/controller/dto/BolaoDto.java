@@ -11,13 +11,18 @@ import org.springframework.data.domain.Page;
 import br.com.alura.bolao.modelo.Bolao;
 import br.com.alura.bolao.modelo.TipoBolao;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class BolaoDto {
 	
+	private Long id;
+	private Long idCriador;
 	private String nomeCriador;
+	private Long idCampeonato;
 	private String nomeCampeonato;
 	private String urlCampeonato;
 	private String nome;
@@ -49,6 +54,11 @@ public class BolaoDto {
 	public static Page<BolaoDto> convertPageToBolaoDto(Page<Bolao> boloes) {
 		
 		return boloes.map(BolaoDto::new);
+	}
+	
+	public static BolaoDto convertUniqueBolaoDto(Bolao bolao, ModelMapper modelMapper) {
+				
+		return modelMapper.map(bolao,BolaoDto.class);
 	}
 
 	

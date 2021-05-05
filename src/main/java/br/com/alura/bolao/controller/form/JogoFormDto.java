@@ -34,12 +34,14 @@ public class JogoFormDto {
 	private Long time2_id;
 	private Long campeonato_id;
 	private Long criador_id;
+	private String local;
+	private String rodada;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm", iso = ISO.DATE_TIME)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime dtJogo;
-	private int placarTime1;
-	private int placarTime2;
+	private Integer placarTime1;
+	private Integer placarTime2;
 	private StatusJogo status;
 	
 	public Jogo convertToJogo (TimeRepository timeRepo, UsuarioRepository userRepo, CampeonatoRepository campRepo) {
@@ -49,18 +51,17 @@ public class JogoFormDto {
 		Usuario criador = userRepo.getOne(criador_id);
 		Campeonato campeonato = campRepo.getOne(campeonato_id);
 		
-		return new Jogo(campeonato,time1, time2, dtJogo, criador);
+		return new Jogo(campeonato,time1, time2, dtJogo, criador, rodada,local);
 		
 	}
 	
 	public Jogo atualizar(Long id, JogoRepository jogoRepo) {
 		
-		logger.info("id dentro do dto = " + id);
-		
+	
 		Jogo jogo = jogoRepo.getOne(id);
 		
-		jogo.setPlacarTime1(2);
-		jogo.setPlacarTime2(1);
+		jogo.setPlacarTime1(placarTime1);
+		jogo.setPlacarTime2(placarTime2);
 		jogo.setStatus(StatusJogo.ANDAMENTO);
 		
 		return jogo;

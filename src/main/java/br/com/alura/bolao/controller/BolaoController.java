@@ -33,11 +33,13 @@ import br.com.alura.bolao.controller.dto.BolaoDto;
 import br.com.alura.bolao.controller.dto.RankingDto;
 import br.com.alura.bolao.controller.dto.RankingExtraDto;
 import br.com.alura.bolao.controller.form.BolaoFormDto;
+import br.com.alura.bolao.controller.form.TimeFormDto;
 import br.com.alura.bolao.modelo.Bolao;
 import br.com.alura.bolao.modelo.BolaoCriterio;
 import br.com.alura.bolao.modelo.BolaoParticipantes;
 import br.com.alura.bolao.modelo.Criterio;
 import br.com.alura.bolao.modelo.StatusParticipante;
+import br.com.alura.bolao.modelo.Time;
 import br.com.alura.bolao.modelo.TipoCriterio;
 import br.com.alura.bolao.repository.BolaoCriterioRepository;
 import br.com.alura.bolao.repository.BolaoParticipanteRepository;
@@ -84,7 +86,7 @@ public class BolaoController {
 	private Integer rcg = -1;
 	private Integer ge = -1;
 	
-	private static final Logger logger = LoggerFactory.getLogger(BolaoController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BolaoController.class); 
 	
 	@PostMapping
 	@Transactional
@@ -114,9 +116,14 @@ public class BolaoController {
 	
 	@PutMapping("/upload-imagem")
 	@Transactional
-	public ResponseEntity<?> uploadImagem(@RequestParam("imagem") MultipartFile imagem,@RequestParam("bolao_id") Long bolao_id) throws IOException{
+	public ResponseEntity<?> uploadImagem(@RequestParam("imagem") MultipartFile imagem,@RequestParam("bolao_id") Long bolao_id,@RequestParam("acao") String acao) throws IOException{
 		
 		Bolao bolao = bolaoRepo.getOne(bolao_id);
+		
+		if (acao.equals("editar") && !bolao.getPublic_id().equals(null)) {
+
+			cloudService.delete(bolao.getPublic_id());
+		} 
 		
 		BufferedImage bi = ImageIO.read(imagem.getInputStream());
 		
@@ -226,6 +233,32 @@ public class BolaoController {
 		rankingExtra.forEach(r -> rankingList.add(RankingExtraDto.montaDto(r)));
 		
 		return ResponseEntity.ok(rankingList);
+	}
+	
+	@GetMapping("/{id}")
+	@Transactional
+	public BolaoDto listarBolaoById (@PathVariable Long id) {
+		
+		Bolao bolao = bolaoRepo.getOne(id);
+		
+		return BolaoDto.convertUniqueBolaoDto(bolao, modelMapper);
+	}
+	
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<Bolao> atualizar(@PathVariable Long id, @RequestBody BolaoFormDto bolaoForm) {
+		
+		Bolao bolaoAtualizado =  bolaoForm.atualizar(id,bolaoRepo,campRepo);
+		
+		return ResponseEntity.ok(bolaoAtualizado);
+	}
+	@PutMapping("/dtpalpiteextra/{id}")
+	@Transactional
+	public ResponseEntity<Bolao> atualizarDtPalpiteExtra(@PathVariable Long id, @RequestBody BolaoFormDto bolaoForm) {
+
+		Bolao bolaoAtualizado =  bolaoForm.atualizarDtPalipiteExtra(id, bolaoRepo);
+
+		return ResponseEntity.ok(bolaoAtualizado);
 	}
 	
 

@@ -74,6 +74,20 @@ public class JogoController {
 		return JogoDto.convertToJogoDto(jogos, modelMapper);
 		
 	}
+	@GetMapping("/listar-rodadas-campeonato")
+	@Transactional
+	public  List<?> listarRodadasCampeonato (@RequestParam("campeonato") Long campeonato_id){
+		
+		List<?> rodadas = new ArrayList<Jogo>();
+		
+		
+		if(campeonato_id !=null) {
+			rodadas = jogoRepo.findRodadasCampeonato(campeonato_id);
+		}
+		
+		return rodadas;
+		
+	}
 	@GetMapping("/listar-rodada")
 	@Transactional
 	public  List<JogoDto> listarPorRodada (@RequestParam("campeonato") Long campeonato_id ,@RequestParam("rodada") String rodada){

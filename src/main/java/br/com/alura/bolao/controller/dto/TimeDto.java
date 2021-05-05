@@ -20,6 +20,7 @@ public class TimeDto {
 	private String nome;
 	private String nomeUsuario;
 	private LocalDate dtCriacao;
+	private String url;
 
 	public TimeDto(Long id, String nome) {
 		this.id = id;
@@ -29,6 +30,11 @@ public class TimeDto {
 	public static List<TimeDto> toTimesDto(List<Time> times, ModelMapper modelMapper) {
 
 		return times.stream().map(t -> modelMapper.map(t, TimeDto.class)).collect(Collectors.toList());
+	}
+	
+	public static TimeDto convertToTimeDto (Time time,ModelMapper modelMapper) {
+		
+		return modelMapper.map(time,TimeDto.class);
 	}
 
 	public static TimeDto montaDto(Object[] o) {

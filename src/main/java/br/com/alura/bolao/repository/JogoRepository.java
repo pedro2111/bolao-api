@@ -37,5 +37,8 @@ public interface JogoRepository extends JpaRepository<Jogo, Long> {
 	@Query("SELECT j FROM Jogo j WHERE j.campeonato.id = :campeonato_id and j.rodada = :rodada")
 	List<Jogo> findByRodada(Long campeonato_id, String rodada);
 
+	@Query("SELECT DISTINCT j.rodada FROM Jogo j WHERE j.campeonato.id = :campeonato_id ORDER BY j.rodada DESC")
+	List<?> findRodadasCampeonato(Long campeonato_id);
+
 
 }

@@ -1,9 +1,14 @@
 package br.com.alura.bolao.controller.form;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.alura.bolao.modelo.Bolao;
 import br.com.alura.bolao.modelo.Campeonato;
 import br.com.alura.bolao.modelo.TipoBolao;
 import br.com.alura.bolao.modelo.Usuario;
+import br.com.alura.bolao.repository.BolaoRepository;
 import br.com.alura.bolao.repository.CampeonatoRepository;
 import br.com.alura.bolao.repository.UsuarioRepository;
 import lombok.Getter;
@@ -20,6 +25,8 @@ public class BolaoFormDto {
 	private String tipoBolao; //pode ser livre ou privado
 	private String nome;
 	private String descricao;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime dtLimitePalpiteExtra;
 	
 	
 	public Bolao convertToBolao (UsuarioRepository userRepo,CampeonatoRepository campRepo) {
@@ -40,6 +47,35 @@ public class BolaoFormDto {
 		}else {
 			return TipoBolao.PRIVADO;
 		}
+		
+	}
+
+	public Bolao atualizar(Long id,BolaoRepository bolaoRepo,CampeonatoRepository campRepo) {
+		
+		Bolao bolao = bolaoRepo.getOne(id);
+		Campeonato campeonato = campRepo.getOne(campeonato_id);
+		TipoBolao tipo = this.defineTipo(tipoBolao);
+		
+		bolao.setCampeonato(campeonato);
+		bolao.setNome(nome);
+		bolao.setDescricao(descricao);
+		bolao.setTipoBolao(tipo);
+		
+		bolaoRepo.save(bolao);
+		
+		return bolao;
+		
+	}
+	public Bolao atualizarDtPalipiteExtra(Long id, BolaoRepository bolaoRepo) {
+		
+		Bolao bolao = bolaoRepo.getOne(id);
+		
+		
+		bolao.setDtLimitePalpiteExtra(dtLimitePalpiteExtra);
+		
+		bolaoRepo.save(bolao);
+		
+		return bolao;
 		
 	}
 

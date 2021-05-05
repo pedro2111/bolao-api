@@ -3,32 +3,28 @@ package br.com.alura.bolao.controller.form;
 import br.com.alura.bolao.modelo.Time;
 import br.com.alura.bolao.modelo.Usuario;
 import br.com.alura.bolao.repository.UsuarioRepository;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class TimeFormDto {
 
 
 	private String nome;
 	private Long usuario_id;
+	private String url;
+	private String public_id;
 	
-	
-	public String getNome() {
-		return nome;
-	}
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-	public Long getUsuario_id() {
-		return usuario_id;
-	}
-	public void setUsuario_id(Long usuario_id) {
-		this.usuario_id = usuario_id;
-	}
+
 	
 	public Time convertToTime (UsuarioRepository usuarioRepo) {
 		
 		Usuario usuario = usuarioRepo.getOne(usuario_id);
 		
-		return new Time(nome,usuario);
+		return new Time(nome,usuario,url,public_id);
 	}
 
 }

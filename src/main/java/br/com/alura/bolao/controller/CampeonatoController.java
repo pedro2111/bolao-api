@@ -62,8 +62,17 @@ public class CampeonatoController {
 	@GetMapping("/listar-todos-campeonatos")
 	@Transactional
 	public List<CampeonatoDto> listarTodos() {
-
+		
 		List<Campeonato> campeonatos = campRepo.findAllByOrderByIdDesc();
+		
+		return CampeonatoDto.toCampeonatoDto(campeonatos, modelMapper);
+	}
+	
+	@GetMapping("/listar-todos-campeonatos-ativos")
+	@Transactional
+	public List<CampeonatoDto> listarTodosAtivos() {
+
+		List<Campeonato> campeonatos = campRepo.findAllAtivos();
 
 		return CampeonatoDto.toCampeonatoDto(campeonatos, modelMapper);
 	}
@@ -77,33 +86,6 @@ public class CampeonatoController {
 		return CampeonatoDto.convertToCampeonato(campeonato, modelMapper);
 
 	}
-/*
-	@GetMapping("/{id}/times")
-	@Transactional
-	public List<TimeDto> listarTimesCampeonato(@PathVariable Long id, @RequestParam(required = false) String nomeTime) {
-
-		List<TimeDto> timesDto = new ArrayList<TimeDto>();
-
-		if (nomeTime != null) {
-
-			List<Object[]> timesCampeonato = campRepo.findByNomeTime(id, nomeTime);
-
-			timesCampeonato.forEach(tc -> timesDto.add(TimeDto.montaDto(tc)));
-
-			return timesDto;
-
-		} else {
-
-			List<Object[]> timesCampeonato = campRepo.findByNotNomeTime(id);
-
-			timesCampeonato.forEach(tc -> timesDto.add(TimeDto.montaDto(tc)));
-
-			return timesDto;
-
-		}
-
-	}
-	*/
 
 	@GetMapping("/listar-campeonatos")
 	@Transactional
@@ -139,12 +121,11 @@ public class CampeonatoController {
 
 	@PutMapping("/upload-imagem")
 	@Transactional
-	public ResponseEntity<?> uploadImagem(@RequestParam("imagem") MultipartFile imagem,
-			@RequestParam("campeonato_id") Long campeonato_id, @RequestParam("acao") String acao) throws IOException {
+	public ResponseEntity<?> uploadImagem(@RequestParam("imagem") MultipartFile imagem, @RequestParam("campeonato_id") Long campeonato_id, @RequestParam("acao") String acao) throws IOException {
 
 		Campeonato campeonato = campRepo.getOne(campeonato_id);
 
-		if (acao.equals("editar") && campeonato.getPublic_id().equals(null)) {
+		if (acao.equals("editar") && !campeonato.getPublic_id().equals(null)) {
 
 			cloudService.delete(campeonato.getPublic_id());
 		}

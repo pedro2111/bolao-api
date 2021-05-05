@@ -22,11 +22,14 @@ public class JogoDto {
 	private Long id;
 	private String nomeTime1;
 	private String nomeTime2;
-	private int placarTime1;
-	private int placarTime2;
+	private String urlTime1;
+	private String urlTime2;
+	private Integer placarTime1;
+	private Integer placarTime2;
 	private LocalDateTime dtJogo;
 	private String rodada;
 	private StatusJogo status;
+	private String local;
 	
 	public static List<JogoDto> convertToJogoDto (List<Jogo> jogos, ModelMapper modelMapper) {
 		

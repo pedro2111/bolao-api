@@ -14,7 +14,11 @@ import br.com.alura.bolao.modelo.StatusCampeonato;
 
 public interface CampeonatoRepository extends JpaRepository<Campeonato, Long> {
 
+	
 	List<Campeonato> findAllByOrderByIdDesc();
+	
+	@Query("SELECT c FROM Campeonato c where c.status != 'ENCERRADO' ORDER BY c.id DESC ")
+	List<Campeonato> findAllAtivos();
 
 
 	@Modifying(clearAutomatically = true)

@@ -182,7 +182,7 @@ public class PalpiteService {
 			palpExtraRepo.save(palp);
 
 		}
-		bolao.setCalculoPalpiteExtra(1);
+		bolao.setCalculoPalpiteExtra(1); //flag para calcular apenas uma vez o palpite extra
 		bolaoRepo.save(bolao);
 
 	}

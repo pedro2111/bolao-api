@@ -53,17 +53,20 @@ public class Jogo {
 	private StatusJogo status = StatusJogo.CRIADO;
 	private LocalDate dtCriacao = LocalDate.now();
 	private String rodada;
+	private String local;
 	
 	public Jogo() {
 		
 	}
 	
-	public Jogo(Campeonato campeonato,Time time1, Time time2, LocalDateTime dtJogo, Usuario criador) {
+	public Jogo(Campeonato campeonato,Time time1, Time time2, LocalDateTime dtJogo, Usuario criador,String rodada, String local) {
 		this.campeonato = campeonato;
 		this.time1 = time1;
 		this.time2 = time2;
 		this.dtJogo = dtJogo;
 		this.criador = criador;
+		this.rodada = rodada;
+		this.local = local;
 	}
 	
 	

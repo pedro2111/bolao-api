@@ -47,13 +47,13 @@ public class CampeonatoDto {
 		this.nome = camp.getNome();
 		this.idCriador = camp.getCriador().getId() ;
 		this.nomeCriador = camp.getCriador().getNome();
-		this.idCampeao = camp.getCampeao().getId();
+		this.idCampeao = (camp.getCampeao() == null) ? 0 : camp.getCampeao().getId();
 		this.nomeCampeao = (camp.getCampeao() == null) ? "na" : camp.getCampeao().getNome();
-		this.idVice = camp.getVice().getId();
+		this.idVice = (camp.getVice() == null) ? 0 : camp.getVice().getId();
 		this.nomeVice = (camp.getVice() == null) ? "na" : camp.getVice().getNome();
-		this.idTerceiro = camp.getTerceiro().getId();
+		this.idTerceiro = (camp.getTerceiro() == null) ? 0 : camp.getTerceiro().getId();
 		this.nomeTerceiro = (camp.getTerceiro() == null) ? "na" : camp.getTerceiro().getNome();
-		this.idQuarto = camp.getQuarto().getId();
+		this.idQuarto = (camp.getQuarto() == null) ? 0 : camp.getQuarto().getId();
 		this.nomeQuarto = (camp.getQuarto() == null) ? "na" : camp.getQuarto().getNome();
 		this.url = (camp.getUrl() == null) ? "na" : camp.getUrl();
 		this.status = camp.getStatus();
