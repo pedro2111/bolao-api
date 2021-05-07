@@ -33,7 +33,7 @@ public class BolaoParticipantesFormDto {
 	public BolaoParticipantes convertToBolaoParticipante(BolaoRepository bolaoRepo, UsuarioRepository userRepo) {
 		
 		Bolao bolao = bolaoRepo.getOne(bolao_id);
-		Usuario participante = userRepo.getOne(participante_ids.get(0));
+		Usuario participante = userRepo.getOne(participante_ids.get(0)); //aproveita a parte do array de ids. Usado quando o participante cliclar em participar bolão
 		
 		return new BolaoParticipantes(participante, bolao, StatusParticipante.INATIVO);
 		
