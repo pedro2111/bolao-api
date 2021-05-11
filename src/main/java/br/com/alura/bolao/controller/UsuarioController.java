@@ -71,7 +71,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioDto usuarioDto,UriComponentsBuilder uriBuilder){
+	public ResponseEntity<Usuario> cadastrar(@RequestBody @Valid UsuarioDto usuarioDto,UriComponentsBuilder uriBuilder){
 		
 		Usuario usuario = usuarioDto.converterUsuario();
 		usuario.setSenha(BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt(12)));
@@ -89,7 +89,7 @@ public class UsuarioController {
 		
 		URI uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(new UsuarioDto(usuario));
+		return ResponseEntity.created(uri).body(usuario);
 	}
 	
 	@PutMapping("/upload-imagem")

@@ -28,6 +28,5 @@ INSERT INTO criterio(categoria_criterio,nome) VALUES ('NORMAL', 'GE');
 INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'CAMPEAO');
 INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'VICE');
 INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'QUARTO');
-INSERT INTO criterio(categoria_criterio,nome) VALUES ('EXTRA', 'TIMEARTILHEIRO');
 
 

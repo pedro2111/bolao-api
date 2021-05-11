@@ -11,6 +11,7 @@ import br.com.alura.bolao.repository.UsuarioRepository;
 
 public class UsuarioDto {
 
+	
 	@NotNull @NotEmpty
 	private String nome;
 	@NotNull @NotEmpty

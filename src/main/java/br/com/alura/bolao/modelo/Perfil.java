@@ -7,7 +7,10 @@ import javax.persistence.Id;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Perfil implements GrantedAuthority{
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
