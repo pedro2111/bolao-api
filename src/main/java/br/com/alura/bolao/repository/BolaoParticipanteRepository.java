@@ -22,4 +22,7 @@ public interface BolaoParticipanteRepository extends JpaRepository<BolaoParticip
 	@Query("SELECT bp FROM BolaoParticipantes bp WHERE bp.bolao.id = :bolao_id")
 	List<BolaoParticipantes> findParticipantesByBolao(@Param("bolao_id") Long id);
 
+	@Query("SELECT bp FROM BolaoParticipantes bp WHERE bp.participante.id = :participante_id")
+	List<BolaoParticipantes> findBoloesByParticipante(@Param("participante_id") Long id);
+
 }

@@ -61,6 +61,16 @@ public class PalpiteController {
 		
 	}
 	
+	@GetMapping("/listarPalpitesUsuarioBolao")
+	public List<PalpiteDto> listarPalpitesUsuarioBolao (@RequestParam("bolao") Long bolao_id,@RequestParam("usuario") Long usuario_id){
+		
+				
+		List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolao(bolao_id,usuario_id);
+		
+		return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
+		
+	}
+	
 	@PostMapping
 	public ResponseEntity<Palpite> cadastrar(@RequestBody PalpiteFormDto palpiteForm){
 		

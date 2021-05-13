@@ -84,8 +84,16 @@ public class BolaoParticipantesController {
 	@GetMapping("/{id}")
 	public List<BolaoParticipantesDto> listarParticipantesBolao (@PathVariable Long id) {
 		
-				
+		
 		List<BolaoParticipantes> bp = bpRepo.findParticipantesByBolao(id);
+		
+		return BolaoParticipantesDto.convertToListBolaoParticipantesDto(bp, modelMapper);
+	}
+	@GetMapping("/participante/{id}")
+	public List<BolaoParticipantesDto> listarBoloesParticipante (@PathVariable Long id) {
+		
+				
+		List<BolaoParticipantes> bp = bpRepo.findBoloesByParticipante(id);
 		
 		return BolaoParticipantesDto.convertToListBolaoParticipantesDto(bp, modelMapper);
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.alura.bolao.modelo.Bolao;
 import br.com.alura.bolao.modelo.BolaoParticipantes;
 import br.com.alura.bolao.modelo.StatusParticipante;
+import br.com.alura.bolao.modelo.TipoBolao;
 import br.com.alura.bolao.modelo.Usuario;
 import br.com.alura.bolao.repository.BolaoParticipanteRepository;
 import br.com.alura.bolao.repository.BolaoRepository;
@@ -35,7 +36,16 @@ public class BolaoParticipantesFormDto {
 		Bolao bolao = bolaoRepo.getOne(bolao_id);
 		Usuario participante = userRepo.getOne(participante_ids.get(0)); //aproveita a parte do array de ids. Usado quando o participante cliclar em participar bolão
 		
-		return new BolaoParticipantes(participante, bolao, StatusParticipante.INATIVO);
+		if(bolao.getTipoBolao().equals(TipoBolao.LIVRE)) {
+			return new BolaoParticipantes(participante, bolao, StatusParticipante.ATIVO);
+		
+		}else {
+			
+			return new BolaoParticipantes(participante, bolao, StatusParticipante.INATIVO);
+			
+		}
+		
+		
 		
 		
 	}

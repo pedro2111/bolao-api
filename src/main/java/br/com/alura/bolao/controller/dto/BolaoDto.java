@@ -34,7 +34,10 @@ public class BolaoDto {
 	
 	
 	public BolaoDto(Bolao bolao) {
+		this.id = bolao.getId();
+		this.idCriador = bolao.getCriador().getId();
 		this.nomeCriador = bolao.getCriador().getNome();
+		this.idCampeonato = bolao.getCampeonato().getId();
 		this.nomeCampeonato = bolao.getCampeonato().getNome();
 		this.urlCampeonato = bolao.getCampeonato().getUrl();
 		this.nome = bolao.getNome();

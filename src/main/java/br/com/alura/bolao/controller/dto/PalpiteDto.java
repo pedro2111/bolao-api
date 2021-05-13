@@ -16,10 +16,8 @@ import lombok.Setter;
 public class PalpiteDto {
 	
 	private Long id;
-	private Long idCampeonato;
 	private Long idJogo;
 	private Long idUsuario;
-	private String nomeCampeonato;
 	private String nomeTime1Jogo;
 	private String nomeTime2Jogo;
 	private String nomeUsuario;
