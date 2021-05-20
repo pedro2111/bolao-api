@@ -1,5 +1,6 @@
 package br.com.alura.bolao.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,6 +24,12 @@ public interface PalpiteRepository extends JpaRepository<Palpite, Long> {
 
 	@Query("SELECT p FROM Palpite p WHERE p.bolao.id = :bolaoId AND p.usuario.id = :usuarioId")
 	List<Palpite> findPalpiteByUsuarioBolao(@Param("bolaoId")Long bolao_id, @Param("usuarioId")Long usuario_id);
+
+	@Query("SELECT p FROM Palpite p WHERE p.bolao.id = :bolaoId AND p.usuario.id = :usuarioId AND p.jogo.rodada = :rodada")
+	List<Palpite> findPalpiteByUsuarioBolaoRodada(@Param("bolaoId")Long bolao_id, @Param("usuarioId")Long usuario_id, @Param("rodada") String rodada);
+	
+	@Query("SELECT p FROM Palpite p WHERE p.bolao.id = :bolaoId AND p.usuario.id = :usuarioId AND DATE(p.jogo.dtJogo) = :data")
+	List<Palpite> findPalpiteByUsuarioBolaoData(@Param("bolaoId")Long bolao_id, @Param("usuarioId")Long usuario_id, @Param("data") LocalDateTime dataJogo);
 
 	
 	

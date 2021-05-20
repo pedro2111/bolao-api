@@ -28,7 +28,10 @@ public class PalpiteService {
 
 	// 10 pontos para em cheio e 5 pontos para vencedor
 
-	public void calcularPontosGanhos(PalpiteRepository palpRepo, BolaoRepository bolaoRepo, JogoRepository jogoRepo,
+	public void calcularPontosGanhos(
+			PalpiteRepository palpRepo, 
+			BolaoRepository bolaoRepo, 
+			JogoRepository jogoRepo,
 			BolaoCriterioRepository bcRepo, Long bolao_id) {
 
 		Bolao bolao = bolaoRepo.getOne(bolao_id);

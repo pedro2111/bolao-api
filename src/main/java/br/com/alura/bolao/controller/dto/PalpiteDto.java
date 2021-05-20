@@ -17,6 +17,7 @@ public class PalpiteDto {
 	
 	private Long id;
 	private Long idJogo;
+	private Long idBolao;
 	private Long idUsuario;
 	private String nomeTime1Jogo;
 	private String nomeTime2Jogo;

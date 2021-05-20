@@ -1,5 +1,7 @@
 package br.com.alura.bolao.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -62,12 +64,28 @@ public class PalpiteController {
 	}
 	
 	@GetMapping("/listarPalpitesUsuarioBolao")
-	public List<PalpiteDto> listarPalpitesUsuarioBolao (@RequestParam("bolao") Long bolao_id,@RequestParam("usuario") Long usuario_id){
+	public List<PalpiteDto> listarPalpitesUsuarioBolao (@RequestParam("bolao") Long bolao_id,@RequestParam("usuario") Long usuario_id,@RequestParam(required = false) String rodada,@RequestParam(required = false) String dtJogo){
 		
-				
-		List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolao(bolao_id,usuario_id);
+		if(rodada == null && dtJogo == null) {
+			List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolao(bolao_id,usuario_id);
+			return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
+			
+		}else if(rodada != null) {
+			
+			List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolaoRodada(bolao_id,usuario_id,rodada);
+			return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
+			
+		}else {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+			LocalDateTime dataJogo = LocalDateTime.parse(dtJogo+" 00:00",formatter);
+			
+			List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolaoData(bolao_id,usuario_id,dataJogo);
+			return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
+			
+		}
 		
-		return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
+		
+		
 		
 	}
 	
@@ -75,6 +93,16 @@ public class PalpiteController {
 	public ResponseEntity<Palpite> cadastrar(@RequestBody PalpiteFormDto palpiteForm){
 		
 		Palpite palpite = palpiteForm.convertToPalpite(bolaoRepo, userRepo, jogoRepo);
+		
+		palpRepo.save(palpite);
+		
+		return ResponseEntity.ok(palpite);
+		
+	}
+	@PutMapping
+	public ResponseEntity<Palpite> atualizar(@RequestBody PalpiteFormDto palpiteForm){
+		
+		Palpite palpite = palpiteForm.atualizarPalpite(palpRepo);
 		
 		palpRepo.save(palpite);
 		

@@ -62,7 +62,7 @@ public class JogoFormDto {
 		
 		jogo.setPlacarTime1(placarTime1);
 		jogo.setPlacarTime2(placarTime2);
-		jogo.setStatus(StatusJogo.ANDAMENTO);
+		jogo.setStatus(status);
 		
 		return jogo;
 		

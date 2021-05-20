@@ -13,16 +13,20 @@ import br.com.alura.bolao.modelo.PalpiteExtra;
 
 public interface BolaoRepository extends JpaRepository<Bolao, Long> {
 	
-	@Query(value= "select ROW_NUMBER () OVER () as posicao,\n" + 
-			"u.nome , \n" + 
-			"sum(pontos_ganho) as pontosganho,\n" + 
-			"count (*) filter (where pontos_ganho = :pe) as PE,\n" + 
-			"count (*) filter (where pontos_ganho = :rcg) as RCG,\n" + 
-			"count (*) filter (where pontos_ganho = :rc) as RC,\n" + 
-			"count (*) filter (where pontos_ganho = :ge) as GE\n" + 
-			"FROM public.palpite p inner join public.usuario u on p.usuario_id = u.id \n" + 
-			"where bolao_id = :bolao_id group by u.nome \n" + 
-			"order by 2 desc, 3 desc", nativeQuery = true)
+	@Query(value= "select ROW_NUMBER () OVER (order by sum (pontos_ganho) desc, \n" + 
+			"count (*) filter (where pontos_ganho = :pe) desc,\n" + 
+			"count (*) filter (where pontos_ganho = :rcg) desc,\n" + 
+			"count (*) filter (where pontos_ganho = :rc) desc,\n" + 
+			"count (*) filter (where pontos_ganho = :ge) desc) as posicao,\n" + 
+			" u.nome,\n" + 
+			" sum (pontos_ganho) as pontosganho,\n" + 
+			" count (*) filter (where pontos_ganho = :pe) as PE,\n" + 
+			" count (*) filter (where pontos_ganho = :rcg) as RCG,\n" + 
+			" count (*) filter (where pontos_ganho = :rc) as RC,\n" + 
+			" count (*) filter (where pontos_ganho = :ge) as GE\n" + 
+			" from public.palpite p inner join public.usuario u on p.usuario_id = u.id\n" + 
+			" where bolao_id = :bolao_id group by u.nome\n" + 
+			"order by pontosganho desc, PE desc, RCG desc,RC desc,GE desc", nativeQuery = true)
 	List<Object[]> findRanking(@Param("bolao_id") Long id, @Param("pe") Integer pe,@Param("rc") Integer rc,@Param("rcg") Integer rcg,@Param("ge") Integer ge);
 
 	

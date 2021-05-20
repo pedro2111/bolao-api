@@ -12,7 +12,7 @@ import br.com.alura.bolao.modelo.BolaoCriterio;
 
 public interface BolaoCriterioRepository extends JpaRepository<BolaoCriterio, Long> {
 
-	@Query("SELECT bc FROM BolaoCriterio bc WHERE bc.bolao.id = :bolao")
+	@Query("SELECT bc FROM BolaoCriterio bc WHERE bc.bolao.id = :bolao order by bc.criterio.id")
 	List<BolaoCriterio> findByBolaoId(@Param("bolao") Long bolao);
 
 	List<BolaoCriterio> findByBolao(Bolao bolao);

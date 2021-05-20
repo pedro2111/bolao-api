@@ -53,6 +53,7 @@ public class JogoController {
 	@Autowired
 	private CampeonatoRepository campRepo;
 	
+	
 	private static final Logger logger = LoggerFactory.getLogger(Jogo.class);
 	
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -135,8 +136,18 @@ public class JogoController {
 		
 		jogoRepo.save(jogoAtualizado);
 		
+	
+		
 		return ResponseEntity.ok(JogoDto.convertToUniqueJogo(jogoAtualizado, modelMapper));
 	} 
+	
+	@GetMapping("/campeonato/{id}/rodada-atual")
+	public String listarRodadaAtual (@PathVariable Long id) {
+		
+		String rodadaAtual = jogoRepo.findRodadaAtual(id);
+		
+		return rodadaAtual;
+	}
 	
 	
 	
