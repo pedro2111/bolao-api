@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,6 +112,7 @@ public class PalpiteController {
 	}
 	
 	@PutMapping("/calcularPontosGanhos")
+	@CacheEvict(value = {"ranking"}, key = "#bolao_id")
 	public void calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
 		
 		palpService.calcularPontosGanhos(palpRepo, bolaoRepo,jogoRepo,bcRepo, bolao_id);

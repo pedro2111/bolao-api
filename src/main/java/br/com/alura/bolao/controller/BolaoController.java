@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -168,6 +169,7 @@ public class BolaoController {
 	}
 	
 	@GetMapping("/{id}/ranking")
+	@Cacheable(value = "ranking", key = "#id")
 	public ResponseEntity<?> ranking (@PathVariable Long id){
 		
 		Bolao bolao = bolaoRepo.getOne(id);
@@ -200,6 +202,7 @@ public class BolaoController {
 	}
 	
 	@GetMapping("/{id}/ranking-extra")
+	@Cacheable(value = "rankingExtra", key = "#id")
 	public ResponseEntity<?> rankingExtra (@PathVariable Long id){
 		
 		Integer campeao = 0;
