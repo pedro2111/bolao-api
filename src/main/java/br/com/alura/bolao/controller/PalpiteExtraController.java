@@ -64,7 +64,7 @@ public class PalpiteExtraController {
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<PalpiteExtra> cadastrar(@RequestBody PalpiteExtraFormDto palpFormDto){
+	public ResponseEntity<?> cadastrar(@RequestBody PalpiteExtraFormDto palpFormDto){
 		
 		PalpiteExtra palpiteExtra = palpFormDto.convertToPalpiteExtra(bolaoRepo, userRepo, criterioRepo, timeRepo);
 		
@@ -73,13 +73,33 @@ public class PalpiteExtraController {
 		return ResponseEntity.ok(palpiteExtra);
 	}
 	
+	@PutMapping
+	@Transactional
+	public ResponseEntity<PalpiteExtra> atualizar(@RequestBody PalpiteExtraFormDto palpFormDto){
+		
+		palpFormDto.atualizarPalpite(palpExtraRepo,timeRepo);
+		
+		
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping("/bolao/{id}")
-	public List<PalpiteExtraDto> listarPalpitesExtrasBolao (@PathVariable Long id){
+	public List<PalpiteExtraDto> listarPalpitesExtrasBolao (@PathVariable Long id,@RequestParam(required = false) Long usuarioId){
 		
+		if(usuarioId == null) {
+			List<PalpiteExtra> palpites = palpExtraRepo.findByBolao(id);
+			
+			return PalpiteExtraDto.convertToPaplpitesExtrasDto(palpites, modelMapper);
+			
+		}else {
+			
+			List<PalpiteExtra> palpites = palpExtraRepo.findByBolaoUsuario(id,usuarioId);
+			
+			return PalpiteExtraDto.convertToPaplpitesExtrasDto(palpites, modelMapper);
+			
+		}
 		
-		List<PalpiteExtra> palpites = palpExtraRepo.findByBolao(id);
-		
-		return PalpiteExtraDto.convertToPaplpitesExtrasDto(palpites, modelMapper);
 	}
 	
 	@PutMapping("/calcular-pontos-extras")

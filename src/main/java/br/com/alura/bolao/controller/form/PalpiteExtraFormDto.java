@@ -7,6 +7,7 @@ import br.com.alura.bolao.modelo.Time;
 import br.com.alura.bolao.modelo.Usuario;
 import br.com.alura.bolao.repository.BolaoRepository;
 import br.com.alura.bolao.repository.CriterioRepository;
+import br.com.alura.bolao.repository.PalpiteExtraRepository;
 import br.com.alura.bolao.repository.TimeRepository;
 import br.com.alura.bolao.repository.UsuarioRepository;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PalpiteExtraFormDto {
 	
+	private Long palpite_id;
 	private Long bolao_id;
 	private Long usuario_id;
 	private Long criterio_id;
@@ -33,6 +35,19 @@ public class PalpiteExtraFormDto {
 		
 		return new PalpiteExtra(bolao,usuario,criterio,time);
 	}
+	
+	public void atualizarPalpite(PalpiteExtraRepository palpRepo, TimeRepository timeRepo) {
+		
+		PalpiteExtra palpExtra = palpRepo.getOne(palpite_id);
+		
+		Time time = timeRepo.getOne(time_id);
+		
+		palpExtra.setPalpiteExtraTime(time);
+		
+		palpRepo.save(palpExtra);
+		
+	}
+	
 	
 
 }

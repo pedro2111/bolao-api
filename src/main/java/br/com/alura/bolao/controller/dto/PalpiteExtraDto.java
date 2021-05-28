@@ -15,11 +15,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PalpiteExtraDto {
 	
-	
+	private Long id;
 	private String nomeBolao;
 	private String nomeUsuario;
 	private String nomeCriterio;
+	private Long idCriterio;
 	private String nomeTime;
+	private Long idTime;
 	
 	
 	public static List<PalpiteExtraDto> convertToPaplpitesExtrasDto(List<PalpiteExtra> palpites,ModelMapper modelMapper) {

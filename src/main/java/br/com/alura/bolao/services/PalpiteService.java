@@ -153,8 +153,7 @@ public class PalpiteService {
 		}
 	}
 
-	public void calcularPontosExtras(Bolao bolao, BolaoRepository bolaoRepo, PalpiteExtraRepository palpExtraRepo,
-			BolaoCriterioRepository bcRepo, CampeonatoRepository campRepo) {
+	public void calcularPontosExtras(Bolao bolao, BolaoRepository bolaoRepo, PalpiteExtraRepository palpExtraRepo,BolaoCriterioRepository bcRepo, CampeonatoRepository campRepo) {
 
 		Campeonato camp = campRepo.getOne(bolao.getCampeonato().getId());
 

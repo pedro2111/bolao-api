@@ -113,10 +113,11 @@ public class PalpiteController {
 	
 	@PutMapping("/calcularPontosGanhos")
 	@CacheEvict(value = {"ranking"}, key = "#bolao_id")
-	public void calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
+	public ResponseEntity<?> calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
 		
 		palpService.calcularPontosGanhos(palpRepo, bolaoRepo,jogoRepo,bcRepo, bolao_id);
 		
+		return ResponseEntity.ok().build();
 	}
 
 }

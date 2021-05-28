@@ -18,6 +18,7 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
 			"count (*) filter (where pontos_ganho = :rcg) desc,\n" + 
 			"count (*) filter (where pontos_ganho = :rc) desc,\n" + 
 			"count (*) filter (where pontos_ganho = :ge) desc) as posicao,\n" + 
+			" u.id,\n" + 
 			" u.nome,\n" + 
 			" sum (pontos_ganho) as pontosganho,\n" + 
 			" count (*) filter (where pontos_ganho = :pe) as PE,\n" + 
@@ -25,7 +26,7 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
 			" count (*) filter (where pontos_ganho = :rc) as RC,\n" + 
 			" count (*) filter (where pontos_ganho = :ge) as GE\n" + 
 			" from public.palpite p inner join public.usuario u on p.usuario_id = u.id\n" + 
-			" where bolao_id = :bolao_id group by u.nome\n" + 
+			" where bolao_id = :bolao_id group by u.nome,u.id\n" + 
 			"order by pontosganho desc, PE desc, RCG desc,RC desc,GE desc", nativeQuery = true)
 	List<Object[]> findRanking(@Param("bolao_id") Long id, @Param("pe") Integer pe,@Param("rc") Integer rc,@Param("rcg") Integer rcg,@Param("ge") Integer ge);
 
@@ -45,6 +46,9 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
 
 	@Query("SELECT b FROM Bolao b where lower(b.nome) like lower(concat('%',:nomeBolao,'%'))") 
 	Page<Bolao> findByNome(@Param("nomeBolao") String nomeBolao, Pageable paginacao);
+
+	@Query("SELECT b FROM Bolao b where b.campeonato.id = :campeonatoId") 
+	List<Bolao> findBoloesByCampeonato(@Param("campeonatoId") Long id);
 
 
 

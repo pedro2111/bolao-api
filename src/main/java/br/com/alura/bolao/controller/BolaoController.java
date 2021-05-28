@@ -152,6 +152,14 @@ public class BolaoController {
 		
 		return BolaoDto.convertToBolaoDto(boloes, modelMapper);
 	}
+	@GetMapping("/campeonato/{id}")
+	public List<BolaoDto> listarBoloesByCampeonato (@PathVariable Long id){
+		
+		List<Bolao> boloes = bolaoRepo.findBoloesByCampeonato(id);
+		
+		
+		return BolaoDto.convertToBolaoDto(boloes, modelMapper);
+	}
 	
 	@GetMapping
 	public Page<BolaoDto> listar (@RequestParam(required = false) String nomeBolao, @PageableDefault(sort = "nome", direction = Direction.ASC) Pageable paginacao){
