@@ -28,25 +28,25 @@ public class PalpiteService {
 
 	// 10 pontos para em cheio e 5 pontos para vencedor
 
-	public void calcularPontosGanhos(
-			PalpiteRepository palpRepo, 
-			BolaoRepository bolaoRepo, 
-			JogoRepository jogoRepo,
-			BolaoCriterioRepository bcRepo, Long bolao_id) {
+	public void calcularPontosGanhos( PalpiteRepository palpRepo,  BolaoRepository bolaoRepo, JogoRepository jogoRepo, BolaoCriterioRepository bcRepo, Long bolao_id) {
 
-		Bolao bolao = bolaoRepo.getOne(bolao_id);
+		List<BolaoCriterio> criterios = null;
+		Bolao bolao = null;
+		
+		bolao = bolaoRepo.getOne(bolao_id);
+		logger.info("bolao id = " + bolao_id);
 
-		List<BolaoCriterio> criterios = bcRepo.findByBolao(bolao);
-
-		// List<Palpite> palpites = palpRepo.findPalpiteByBolaoJogoAndamento(bolao);
+		criterios = bcRepo.findByBolao(bolao);
 
 		List<Jogo> jogos = jogoRepo.findByCampeonatoJogoAndamento(bolao.getCampeonato());
 
 		for (Jogo jogo : jogos) {
+			logger.info("jogo id = " + jogo.getId());
 
-			List<Palpite> palpitesJogo = palpRepo.findByJogoId(jogo);
+			List<Palpite> palpitesJogo = palpRepo.findByJogoId(jogo,bolao);
 
 			for (Palpite pj : palpitesJogo) {
+				pj.setPontosGanho(0);
 
 				for (BolaoCriterio bc : criterios) {
 
@@ -54,6 +54,7 @@ public class PalpiteService {
 						if (pj.getPlacarTime1() == jogo.getPlacarTime1()
 								&& pj.getPlacarTime2() == jogo.getPlacarTime2()) {
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("PE = " + bc.getPontuacao());
 
 						}
 
@@ -62,6 +63,7 @@ public class PalpiteService {
 						if (!pe(jogo, pj) && rc(jogo, pj) && (jogo.getPlacarTime1() == pj.getPlacarTime1()
 								|| jogo.getPlacarTime2() == pj.getPlacarTime2())) {
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("RCG = " + bc.getPontuacao());
 
 						}
 
@@ -71,15 +73,18 @@ public class PalpiteService {
 						if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime1() > jogo.getPlacarTime2()
 								&& pj.getPlacarTime1() > pj.getPlacarTime2()) {
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("RC = " + bc.getPontuacao());
 
 						} else if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime2() > jogo.getPlacarTime1()
 								&& pj.getPlacarTime2() > pj.getPlacarTime1()) {
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("RC = " + bc.getPontuacao());
 
 						} else if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime1() == jogo.getPlacarTime2()
 								&& pj.getPlacarTime1() == pj.getPlacarTime2()
 								&& jogo.getPlacarTime1() != pj.getPlacarTime1()) { // acertou empate mas sem o placar
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("RC = " + bc.getPontuacao());
 
 						}
 
@@ -89,6 +94,7 @@ public class PalpiteService {
 								&& (jogo.getPlacarTime1() == pj.getPlacarTime1()
 										|| jogo.getPlacarTime2() == pj.getPlacarTime2())) {
 							pj.setPontosGanho(bc.getPontuacao());
+							logger.info("GE = " + bc.getPontuacao());
 
 						}
 

@@ -117,11 +117,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/{id}")
-	public UsuarioDto detalhar (@PathVariable Long id) {
+	public Usuario detalhar (@PathVariable Long id) {
 		
 		Usuario usuario = usuarioRepository.getOne(id);
 		
-		return new UsuarioDto(usuario);
+		return usuario;
 	}
 	
 	@PutMapping("/{id}")
