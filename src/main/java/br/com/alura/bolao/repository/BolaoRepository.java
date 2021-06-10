@@ -20,6 +20,7 @@ public interface BolaoRepository extends JpaRepository<Bolao, Long> {
 			"count (*) filter (where pontos_ganho = :ge) desc) as posicao,\n" + 
 			" u.id,\n" + 
 			" u.nome,\n" + 
+			" u.url,\n" + 
 			" sum (pontos_ganho) as pontosganho,\n" + 
 			" count (*) filter (where pontos_ganho = :pe) as PE,\n" + 
 			" count (*) filter (where pontos_ganho = :rcg) as RCG,\n" + 
