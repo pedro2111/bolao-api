@@ -2,6 +2,7 @@ package br.com.alura.bolao.controller;
 
 import java.util.List;
 
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import br.com.alura.bolao.modelo.BolaoCriterio;
 import br.com.alura.bolao.repository.BolaoCriterioRepository;
 import br.com.alura.bolao.repository.BolaoRepository;
 import br.com.alura.bolao.repository.CriterioRepository;
+import org.springframework.cache.annotation.Cacheable;
 
 @RestController
 @RequestMapping("/boloes-criterios")
@@ -47,6 +49,7 @@ public class BolaoCriterioController {
 	}
 	
 	@GetMapping
+	@Cacheable(value = "criterios", key = "#bolao")
 	public List<BolaoCriterioDto> listarByBolao (@RequestParam Long bolao) {
 		
 		List<BolaoCriterio> bc = bcRepo.findByBolaoId(bolao);

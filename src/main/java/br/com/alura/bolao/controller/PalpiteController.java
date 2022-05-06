@@ -7,6 +7,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,7 @@ public class PalpiteController {
 	}
 	
 	@GetMapping("/listarPalpitesUsuarioBolao")
+	//@Cacheable(value = "palpite", key = "#usuario_id")
 	public List<PalpiteDto> listarPalpitesUsuarioBolao (@RequestParam("bolao") Long bolao_id,@RequestParam("usuario") Long usuario_id,@RequestParam(required = false) String rodada,@RequestParam(required = false) String dtJogo){
 		
 		if(rodada == null && dtJogo == null) {
@@ -83,11 +85,16 @@ public class PalpiteController {
 			List<Palpite> palpites = palpRepo.findPalpiteByUsuarioBolaoData(bolao_id,usuario_id,dataJogo);
 			return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
 			
-		}
+		}		
 		
+	}
+	
+	@GetMapping("/listarPalpitesJogo")
+	public List<PalpiteDto> listarPalpitesJogo (@RequestParam("bolao") Long bolao_id, @RequestParam("jogo") Long jogo_id){
 		
+		List<Palpite> palpites = palpRepo.findByUltimoJogo(jogo_id, bolao_id);
 		
-		
+		return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
 	}
 	
 	@PostMapping
@@ -112,7 +119,7 @@ public class PalpiteController {
 	}
 	
 	@PutMapping("/calcularPontosGanhos")
-	//@CacheEvict(value = {"ranking"}, key = "#bolao_id")
+	@CacheEvict(value = {"ranking"}, allEntries=true, key = "#bolao_id")
 	public ResponseEntity<?> calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
 		
 		palpService.calcularPontosGanhos(palpRepo, bolaoRepo,jogoRepo,bcRepo, bolao_id);

@@ -42,6 +42,10 @@ public interface JogoRepository extends JpaRepository<Jogo, Long> {
 
 	@Query(value = "select rodada from public.jogo where status != 'ENCERRADO' and campeonato_id = :campeonatoId order by dt_jogo asc limit 1", nativeQuery = true)
 	String findRodadaAtual(@Param("campeonatoId")Long id);
+	
+	@Query(value = "SELECT id FROM public.jogo where campeonato_id  = :campeonatoId and dt_jogo <= current_timestamp order by dt_jogo desc limit 1", nativeQuery = true)
+	Long findUltimoJogo(@Param("campeonatoId") Long id);
+	
 
 
 }

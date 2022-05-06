@@ -19,7 +19,10 @@ public interface PalpiteRepository extends JpaRepository<Palpite, Long> {
 	@Query("SELECT p FROM Palpite p WHERE p.bolao  = :bolao AND p.jogo.status = 'ANDAMENTO' ")
 	List<Palpite> findPalpiteByBolaoJogoAndamento(@Param("bolao") Bolao bolao);
 
-	@Query("SELECT p FROM Palpite p WHERE p.jogo = :jogo AND p.bolao = :bolao")
+	@Query("SELECT p FROM Palpite p WHERE p.jogo.id = :jogo AND p.bolao.id = :bolao")
+	List<Palpite> findByUltimoJogo(@Param("jogo") Long jogo,@Param("bolao") Long bolao);
+	
+	@Query("SELECT p FROM Palpite p WHERE p.jogo.id = :jogo AND p.bolao.id = :bolao")
 	List<Palpite> findByJogoId(@Param("jogo") Jogo jogo,@Param("bolao") Bolao bolao);
 
 	@Query("SELECT p FROM Palpite p WHERE p.bolao.id = :bolaoId AND p.usuario.id = :usuarioId")

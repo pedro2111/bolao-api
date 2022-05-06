@@ -103,7 +103,7 @@ public class PalpiteExtraController {
 	}
 	
 	@PutMapping("/calcular-pontos-extras")
-	//@CacheEvict(value = {"rankingExtra"}, key = "#bolao_id")
+	@CacheEvict(value = {"rankingExtra"}, allEntries=true, key = "#bolao_id")
 	public ResponseEntity<?> calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
 		
 		Bolao bolao = bolaoRepo.getOne(bolao_id);

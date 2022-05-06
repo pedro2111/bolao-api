@@ -20,10 +20,14 @@ public class PalpiteDto {
 	private Long idBolao;
 	private Long idUsuario;
 	private String nomeTime1Jogo;
+	private String urlTime1Jogo;
 	private String nomeTime2Jogo;
+	private String urlTime2Jogo;
 	private String nomeUsuario;
 	private Integer placarTime1;
+	private Integer placarTime1Jogo;
 	private Integer placarTime2;
+	private Integer placarTime2Jogo;
 	private Integer pontosGanho = 0;
 	
 	

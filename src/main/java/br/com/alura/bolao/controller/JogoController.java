@@ -94,16 +94,16 @@ public class JogoController {
 	public  List<JogoDto> listarPorRodada (@RequestParam("campeonato") Long campeonato_id ,@RequestParam("rodada") String rodada){
 		
 		List<Jogo> jogos = new ArrayList<Jogo>();
-					
+		
 		
 		if(rodada != null && campeonato_id !=null) {
 			jogos = jogoRepo.findByRodada(campeonato_id,rodada);
 		}
 		
 		return JogoDto.convertToJogoDto(jogos, modelMapper);
-				
+		
 	}
-	
+
 	@PostMapping
 	@Transactional
 	public ResponseEntity<Jogo> cadastrar(@RequestBody JogoFormDto jogoForm){
@@ -149,10 +149,14 @@ public class JogoController {
 		return rodadaAtual;
 	}
 	
-	
-	
-	
-	
+	@GetMapping("/campeonato/{id}/ultimo-jogo")
+	public Long listarUltimoJogo(@PathVariable Long id) {
+		
+		Long idJogo = jogoRepo.findUltimoJogo(id);
+		
+		return idJogo;
+		
+	}	
 	
 
 }
