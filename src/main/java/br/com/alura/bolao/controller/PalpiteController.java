@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alura.bolao.controller.dto.PalpiteDto;
 import br.com.alura.bolao.controller.form.PalpiteFormDto;
 import br.com.alura.bolao.modelo.Bolao;
+import br.com.alura.bolao.modelo.Jogo;
 import br.com.alura.bolao.modelo.Palpite;
 import br.com.alura.bolao.repository.BolaoCriterioRepository;
 import br.com.alura.bolao.repository.BolaoRepository;
@@ -27,6 +31,8 @@ import br.com.alura.bolao.repository.JogoRepository;
 import br.com.alura.bolao.repository.PalpiteRepository;
 import br.com.alura.bolao.repository.UsuarioRepository;
 import br.com.alura.bolao.services.PalpiteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/palpites")
@@ -52,6 +58,8 @@ public class PalpiteController {
 	
 	@Autowired
 	private BolaoCriterioRepository bcRepo;
+	
+	private static final Logger logger = LoggerFactory.getLogger(Palpite.class);
 	
 	
 	@GetMapping("/listarPalpitesBolao")
@@ -88,10 +96,11 @@ public class PalpiteController {
 		}		
 		
 	}
-	
+	@Cacheable(value = "palpiteUltimo")
 	@GetMapping("/listarPalpitesJogo")
 	public List<PalpiteDto> listarPalpitesJogo (@RequestParam("bolao") Long bolao_id, @RequestParam("jogo") Long jogo_id){
 		
+		logger.info("executei o select do ultimo");
 		List<Palpite> palpites = palpRepo.findByUltimoJogo(jogo_id, bolao_id);
 		
 		return PalpiteDto.convertToPalpiteDto(palpites, modelMapper);
