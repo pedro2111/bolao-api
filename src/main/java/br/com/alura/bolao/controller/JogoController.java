@@ -130,7 +130,7 @@ public class JogoController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value = {"palpiteUltimo"}, allEntries=true)
+	/*@CacheEvict(value = {"palpiteUltimo"}, allEntries=true)*/
 	public ResponseEntity<JogoDto> atualizar(@PathVariable Long id, @RequestBody JogoFormDto formJogo ){
 		
 		logger.info("id = " + id);
@@ -152,7 +152,7 @@ public class JogoController {
 		return rodadaAtual;
 	}
 	
-	@Cacheable(value = "palpiteUltimo")
+	/*@Cacheable(value = "palpiteUltimo")*/
 	@GetMapping("/campeonato/{id}/ultimo-jogo")
 	public Long listarUltimoJogo(@PathVariable Long id) {
 		

@@ -96,7 +96,7 @@ public class PalpiteController {
 		}		
 		
 	}
-	@Cacheable(value = "palpiteUltimo")
+	//@Cacheable(value = "palpiteUltimo")
 	@GetMapping("/listarPalpitesJogo")
 	public List<PalpiteDto> listarPalpitesJogo (@RequestParam("bolao") Long bolao_id, @RequestParam("jogo") Long jogo_id){
 		
@@ -128,7 +128,7 @@ public class PalpiteController {
 	}
 	
 	@PutMapping("/calcularPontosGanhos")
-	@CacheEvict(value = {"ranking"}, allEntries=true, key = "#bolao_id")
+	//@CacheEvict(value = {"ranking"}, allEntries=true, key = "#bolao_id")
 	public ResponseEntity<?> calcularPontosGanhos(@RequestParam("bolao") Long bolao_id) {
 		
 		palpService.calcularPontosGanhos(palpRepo, bolaoRepo,jogoRepo,bcRepo, bolao_id);

@@ -49,7 +49,7 @@ public class BolaoCriterioController {
 	}
 	
 	@GetMapping
-	@Cacheable(value = "criterios", key = "#bolao")
+	//@Cacheable(value = "criterios", key = "#bolao")
 	public List<BolaoCriterioDto> listarByBolao (@RequestParam Long bolao) {
 		
 		List<BolaoCriterio> bc = bcRepo.findByBolaoId(bolao);
