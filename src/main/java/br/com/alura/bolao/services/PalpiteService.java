@@ -58,7 +58,7 @@ public class PalpiteService {
 
 						}
 
-					} else if (bc.getCriterio().getNome().equals(TipoCriterio.RCG)) {// RESULTADO CERTO GOL - ACERTOU O
+					} /*else if (bc.getCriterio().getNome().equals(TipoCriterio.RCG)) {// RESULTADO CERTO GOL - ACERTOU O
 																						// VENCEDOR E UM DOS PLACARES
 						if (!pe(jogo, pj) && rc(jogo, pj) && (jogo.getPlacarTime1() == pj.getPlacarTime1()
 								|| jogo.getPlacarTime2() == pj.getPlacarTime2())) {
@@ -67,20 +67,20 @@ public class PalpiteService {
 
 						}
 
-					} else if (bc.getCriterio().getNome().equals(TipoCriterio.RC)) { //// RESULTADO CERTO - ACERTOU O
+					}*/ else if (bc.getCriterio().getNome().equals(TipoCriterio.RC)) { //// RESULTADO CERTO - ACERTOU O
 																						//// VENCEDOR OU EMPATE, MAS COM
 																						//// PLACAR ERRADO
-						if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime1() > jogo.getPlacarTime2()
+						if (!pe(jogo, pj) && jogo.getPlacarTime1() > jogo.getPlacarTime2()
 								&& pj.getPlacarTime1() > pj.getPlacarTime2()) {
 							pj.setPontosGanho(bc.getPontuacao());
 							logger.info("RC = " + bc.getPontuacao());
 
-						} else if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime2() > jogo.getPlacarTime1()
+						} else if (!pe(jogo, pj) && jogo.getPlacarTime2() > jogo.getPlacarTime1()
 								&& pj.getPlacarTime2() > pj.getPlacarTime1()) {
 							pj.setPontosGanho(bc.getPontuacao());
 							logger.info("RC = " + bc.getPontuacao());
 
-						} else if (!rcg(jogo, pj) && !pe(jogo, pj) && jogo.getPlacarTime1() == jogo.getPlacarTime2()
+						} else if (!pe(jogo, pj) && jogo.getPlacarTime1() == jogo.getPlacarTime2()
 								&& pj.getPlacarTime1() == pj.getPlacarTime2()
 								&& jogo.getPlacarTime1() != pj.getPlacarTime1()) { // acertou empate mas sem o placar
 							pj.setPontosGanho(bc.getPontuacao());
@@ -88,7 +88,7 @@ public class PalpiteService {
 
 						}
 
-					} else if (bc.getCriterio().getNome().equals(TipoCriterio.GE)) { // gol errado - não vencedor mas
+					} /*else if (bc.getCriterio().getNome().equals(TipoCriterio.GE)) { // gol errado - não vencedor mas
 																						// acertou um dos placares
 						if (!rcg(jogo, pj) && !rc(jogo, pj) && !pe(jogo, pj)
 								&& (jogo.getPlacarTime1() == pj.getPlacarTime1()
@@ -98,12 +98,12 @@ public class PalpiteService {
 
 						}
 
-					}
+					}*/
 				}
-				if (!rcg(jogo, pj) && !pe(jogo, pj) && !ge(jogo, pj) && !rc(jogo, pj)) {
+				/*if (!rcg(jogo, pj) && !pe(jogo, pj) && !ge(jogo, pj) && !rc(jogo, pj)) {
 					pj.setPontosGanho(0);
 
-				}
+				}*/
 
 				palpRepo.save(pj);
 
